@@ -1,13 +1,5 @@
 # CC_2122
-Red social para practicar lenguaje
-Se sirve para ayudar la gente que quiere hacer practica de segunda o/y tercera lengua y busca otra persona que esta nativa de esta lenguaje para practicar conjunto.
-
-  https://www.mylanguageexchange.com/
-  
-  https://www.openlanguageexchange.com/search.php
-
-Se va a ser un WebApp con sgundo funcional:
-  1. Crear un perfil
-  2. Corregir un perfil
-  3. Authentificacion con login/password
-  4. Buscar otros usarios con algunos criterios
+Sistema que podra analizar y detectar su nivel de lengua.
+También puede analizar y elegir otro usario para practirar su nivel en mejor manera.
+https://www.languagelevel.com/index.php
+https://www.classgap.com/tests/en
