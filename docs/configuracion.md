@@ -1,4 +1,4 @@
-# Let us configurate GitHub profile:
+# Let us configurate our workspace:
 
 1. Go to Settings > Profile section. 
    
