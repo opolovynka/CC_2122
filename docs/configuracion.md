@@ -2,7 +2,7 @@
 
 1. Go to Settings > Profile section. 
    
-   <img title="" src="https://user-images.githubusercontent.com/91627367/136522752-df99dfc2-a25a-4dd9-89b6-f66db5997813.png" alt="" width="174"><img title="" src="https://user-images.githubusercontent.com/91627367/136523063-afdf5d07-0810-409e-a8a9-5823b0ecc152.png" alt="" align="right" width="427"> 
+   <img title="" src="https://user-images.githubusercontent.com/91627367/136522752-df99dfc2-a25a-4dd9-89b6-f66db5997813.png" alt="" width="174"><img title="" src="https://user-images.githubusercontent.com/91627367/136523063-afdf5d07-0810-409e-a8a9-5823b0ecc152.png" alt="" align="right" width="500"> 
 
 2. Enter the full name to the Name field. <br/>
 
@@ -20,13 +20,13 @@
 
 ## Now we have configurated our Profile:
 
-<img align="right" width="500px" src="https://user-images.githubusercontent.com/91627367/136523679-c246c665-9883-4530-beca-92e2ad1966db.png">
+<img align="center" width="500px" src="https://user-images.githubusercontent.com/91627367/136523679-c246c665-9883-4530-beca-92e2ad1966db.png">
 
 ## Setup email:
 
 1. Go to Settings > Emails 
    
-   <img title="" src="https://user-images.githubusercontent.com/91627367/136524224-f1ff2e7e-9b26-40de-ab91-d1b7c6408905.png" alt="image" width="90"> <img title="" src="https://user-images.githubusercontent.com/91627367/136524643-c5fef2a1-6e09-4cc7-a0f2-b377f466a15c.png" alt="image" width="523">
+   <img title="" src="https://user-images.githubusercontent.com/91627367/136524224-f1ff2e7e-9b26-40de-ab91-d1b7c6408905.png" alt="image" width="174"> <img title="" src="https://user-images.githubusercontent.com/91627367/136524643-c5fef2a1-6e09-4cc7-a0f2-b377f466a15c.png" alt="image" width="523">
 
 2. Fill Add email adress field and press Add button
 
@@ -71,7 +71,7 @@
 
 8. Go to Settings > SSH and GPG keys 
    
-   <img src="https://user-images.githubusercontent.com/91627367/136529077-3aa7d4fb-ddba-446f-9931-0bfb9cd7e7bf.png" title="" alt="image" width="94"> <img title="" src="https://user-images.githubusercontent.com/91627367/136529142-e88afa31-6293-4155-9882-6efc5b45418c.png" alt="image" width="521">
+   <img src="https://user-images.githubusercontent.com/91627367/136529077-3aa7d4fb-ddba-446f-9931-0bfb9cd7e7bf.png" title="" alt="image" width="174"> <img title="" src="https://user-images.githubusercontent.com/91627367/136529142-e88afa31-6293-4155-9882-6efc5b45418c.png" alt="image" width="650">
 
 9. Press New SSH key button.
 
