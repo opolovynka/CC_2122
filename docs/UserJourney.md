@@ -12,4 +12,4 @@
 ## Anonymouse User get level result
 * Anonymouse user have to run test
 * When Anonymouse User answer the last question, he will be redirected to the result page.
-* The user will see the result of hist test.
+* The user will see the result of his test.
