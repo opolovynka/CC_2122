@@ -1,9 +1,18 @@
-# GoSpeak
-## Descripción
-Sistema que podrá analizar y detectar su nivel de lengua y monitorea el progreso. También puede analizar y continuamente te propone usuarios (nuevas, si empareje su características) para practicar su nivel en mejor manera. 
-  Planear como puede progresar.
+# GoSpeak v.0.2
 
-## Lógica de Negocio
-Usuario tiene que pasar una prueba especial. Depende de su respuesta las preguntas va a cambiar con respecto a respuestas para esto usuario. Sistema tiene que detectar y un nivel muy parecido, entonces tiene que aprobar preguntas de lo mismo nivel no solamente uno vez.
+## Description
+This system will help you to recognize your language level and monitor your progress. Also, it will help you appropriate users which you can practice with in the best way possible. 
+  Plan how you can improve your langauage skill.
 
-  También hay lógica para hacer pronóstico de progreso y que tienes que hacer para mejorar su progreso.
+## Buisiness logic
+User have to go throw test. Depends from answers the system will change the level of the question regarding to the answers. Also the system will be able to analyze answers and detect the user's language level.
+Also there's logic to make forecast of the progress of the user.
+
+
+## Configuration
+See [configuration manual](https://github.com/opolovynka/GoSpeak/blob/master/docs/configuracion.md)
+
+## User journey
+To undertand how the system will be working, please check [User Journey](https://github.com/opolovynka/GoSpeak/blob/master/docs/UserJourney.md)
+
+## [User Story](https://github.com/opolovynka/GoSpeak/blob/master/docs/UserStories.md)
