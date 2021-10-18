@@ -1,5 +1,6 @@
 ﻿namespace Model
 {
+    //class for Authorized/Not Authorized user
     public class User
     {
         public int UserId {get;set;}
