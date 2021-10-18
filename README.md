@@ -15,4 +15,6 @@ See [configuration manual](https://github.com/opolovynka/GoSpeak/blob/master/doc
 ## User journey
 To undertand how the system will be working, please check [User Journey](https://github.com/opolovynka/GoSpeak/blob/master/docs/UserJourney.md)
 
-## [User Story](https://github.com/opolovynka/GoSpeak/blob/master/docs/UserStories.md)
+## User Story
+Here you can find [User Story](https://github.com/opolovynka/GoSpeak/blob/master/docs/UserStories.md)
+
