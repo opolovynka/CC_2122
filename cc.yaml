@@ -1,2 +1,2 @@
-entidad:
+entity:
   User: GoSpeak\Model\User.cs
