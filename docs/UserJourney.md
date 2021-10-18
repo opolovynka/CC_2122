@@ -14,3 +14,10 @@
 * To register user has to enter **UserNamer** and **Password**
 * If there's user with this **UserName** user will be asked to select another
 * If **UserName** is free, user will be register and become **Authorized User**
+
+## Administrator
+* Can see the list of the question and correct answers
+* Can Edit any question and answer
+* Can Add new question and/or answer
+* Can see list of Authorized Users
+* Can see details of Authorized Users
