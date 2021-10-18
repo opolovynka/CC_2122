@@ -1,4 +1,4 @@
-# GoSpeak v.0.2
+# GoSpeak v.0.2.1
 
 ## Description
 This system will help you to recognize your language level and monitor your progress. Also, it will help you appropriate users which you can practice with in the best way possible. 
