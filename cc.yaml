@@ -1,2 +1,5 @@
-entity:
+---.Net 5.0 C#
+entities:
   User: GoSpeak\Model\User.cs
+  Answer: GoSpeak\Model\Answer.cs
+  Question: GoSpeak\Model\Question.cs
