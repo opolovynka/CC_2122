@@ -3,3 +3,7 @@ entities:
   User: GoSpeak\Model\User.cs
   Answer: GoSpeak\Model\Answer.cs
   Question: GoSpeak\Model\Question.cs
+  
+--- Tests MSTest.TestFramework 2.2.3
+--- MSTest.TestAdapter 2.2.3
+--- Microsoft.NET.Test.Sdk 16.9.4
