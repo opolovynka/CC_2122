@@ -127,8 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-/GoSpeak/Model/bin/Debug/*
-/GoSpeak/Model/obj/Debug/*
-/GoSpeak/.vs/GoSpeak/v16/.suo
+/GoSpeak/Model/bin/*
 /GoSpeak/Model/obj/*
+/GoSpeak/.vs/GoSpeak/v16/.suo
 /GoSpeak/.vs/GoSpeak/DesignTimeBuild/.dtbcache.v2
