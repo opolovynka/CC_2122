@@ -1,4 +1,4 @@
-# GoSpeak v.0.2.4
+# GoSpeak v.0.2.5
 
 ## Description
 This system will help you to recognize your language level and monitor your progress. Also, it will help you appropriate users which you can practice with in the best way possible. 
@@ -18,3 +18,5 @@ To undertand how the system will be working, please check [User Journey](https:/
 ## User Story
 Here you can find [User Story](https://github.com/opolovynka/GoSpeak/blob/master/docs/UserStories.md)
 
+## Test
+Link to the [test documentation](https://github.com/opolovynka/GoSpeak/blob/master/docs/Tests.md) which describe test framework and the decision was made for select it.
