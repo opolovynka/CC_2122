@@ -1,6 +1,6 @@
 lenguaje:
   - C#
-Entidad:
+entidad:
   - GoSpeak\Model\User.cs
   - GoSpeak\Model\Answer.cs
   - GoSpeak\Model\Question.cs
