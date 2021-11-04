@@ -8,5 +8,5 @@ controller:
   - GoSpeak/QuestionService/Controllers/QuestionController.cs
 tasks:
   - GoSpeak/package.json
-tests:
+test:
   - GoSpeak/Tests/QuestionControllerTest.cs 
