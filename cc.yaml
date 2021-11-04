@@ -1,9 +1,7 @@
 lenguaje:
   - C#
 entidad:
-  - GoSpeak\Model\User.cs
-  - GoSpeak\Model\Answer.cs
-  - GoSpeak\Model\Question.cs
+  - GoSpeak/QuestionService/Program.cs
 controller:
   - GoSpeak/QuestionService/Controllers/QuestionController.cs
 fichero_tareas:
