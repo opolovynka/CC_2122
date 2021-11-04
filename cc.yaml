@@ -1,9 +1,12 @@
----.Net 5.0 C#
+lenguaje:
+  - C#
 entities:
-  User: GoSpeak\Model\User.cs
-  Answer: GoSpeak\Model\Answer.cs
-  Question: GoSpeak\Model\Question.cs
-  
---- Tests MSTest.TestFramework 2.2.3
---- MSTest.TestAdapter 2.2.3
---- Microsoft.NET.Test.Sdk 16.9.4
+  - GoSpeak\Model\User.cs
+  - GoSpeak\Model\Answer.cs
+  - GoSpeak\Model\Question.cs
+controller:
+  - GoSpeak/QuestionService/Controllers/QuestionController.cs
+tasks:
+  - GoSpeak/package.json
+tests:
+  - GoSpeak/Tests/QuestionControllerTest.cs 
