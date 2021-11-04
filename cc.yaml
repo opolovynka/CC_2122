@@ -6,7 +6,7 @@ entities:
   - GoSpeak\Model\Question.cs
 controller:
   - GoSpeak/QuestionService/Controllers/QuestionController.cs
-tasks:
+task:
   - GoSpeak/package.json
 test:
   - GoSpeak/Tests/QuestionControllerTest.cs 
