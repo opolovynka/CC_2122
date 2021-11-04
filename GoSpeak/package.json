@@ -1,0 +1,15 @@
+{
+  "name": "GoSpeak",
+  "version": "0.2.5",
+
+  "scripts": {
+    "setup": "npm install && dotnet build",
+    "test": "dotnet test",
+    "setup_all": "npm run setup && npm run test"
+  },
+  "testRunner": "dotnet-test-xunit",
+  "dependencies": {
+    "xunit": "2.1.0-*",
+    "dotnet-test-xunit": "2.1.0-*"
+  }
+}
