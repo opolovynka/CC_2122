@@ -9,7 +9,7 @@ First of all we had to decided which Framework to use for our tests. Based on th
 # Test runner
 
 To run tests we use [xUnit test runner](https://github.com/dotnet/coreclr.xunit) which allow us to run tests in independed way and see all results clear.
-Alse we using github actions. For this we have to create file .github/workflows/test.yml ![Configuration](https://user-images.githubusercontent.com/91627367/140398585-19d49560-857c-48d8-8afd-682905c9ecc3.png) whith next script: name: Build and Test
+Alse we using github actions. For this we have to create file .github/workflows/test.yml <img title="" src="https://user-images.githubusercontent.com/91627367/140398585-19d49560-857c-48d8-8afd-682905c9ecc3.png" alt="" align="right" width="500"> whith next script: name: Build and Test
 
 ```C#
 on: push
@@ -30,7 +30,8 @@ jobs:
       - run: dotnet test GoSpeak/Tests/Tests.csproj
 ```
 
-#Task runner
+# Task runner
+
 As task runner will be used npm. In this [article](https://blog.teamtreehouse.com/use-npm-task-runner) we can see how npm can be used in many ways.
 In our case we will have package.js file with next code:
 ```JSON
