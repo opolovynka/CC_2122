@@ -1,4 +1,4 @@
-* API description
+# API description
 
 | API 	| Description 	 | Request body 	     | Response body |
 |-------|----------------|---------------------|---------------|
