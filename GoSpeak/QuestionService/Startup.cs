@@ -1,11 +1,14 @@
+using GoSpeak.Model;
+using GoSpeak.QuestionService.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-namespace QuestionService
+namespace GoSpeak.QuestionService
 {
     public class Startup
     {
@@ -21,10 +24,11 @@ namespace QuestionService
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "QuestionService", Version = "v1" });
-            });
+
+            services.AddScoped<IQuestionService, Services.QuestionService>();
+
+            services.AddDbContext<QuestionContext>(opt =>
+                opt.UseInMemoryDatabase("QuestionsList"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,11 +37,7 @@ namespace QuestionService
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "QuestionService v1"));
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -47,6 +47,10 @@ namespace QuestionService
             {
                 endpoints.MapControllers();
             });
+
+            //preseed database from json file
+            var dataText = System.IO.File.ReadAllText(@"./../data.json");
+            Seeder.Seedit(dataText, app.ApplicationServices);
         }
     }
 }
