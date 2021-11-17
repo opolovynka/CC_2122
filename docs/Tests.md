@@ -10,9 +10,12 @@ First of all we had to decided which Framework to use for our tests. Based on th
 
 To run tests we use [xUnit test runner](https://github.com/dotnet/coreclr.xunit) which allow us to run tests in independed way and see all results clear.
 <br/>Also we're going to use github actions. 
-For this we have to create file .github/workflows/test.yml <img title="" src="https://user-images.githubusercontent.com/91627367/140398585-19d49560-857c-48d8-8afd-682905c9ecc3.png" alt="" align="right" width="500"> whith next script: name: Build and Test
+For this we have to create file .github/workflows/test.yml <img title="" src="https://user-images.githubusercontent.com/91627367/142263700-9cd64127-8973-43af-bca5-e2bd3f976662.png" alt="" align="right" width="500">
+ whith next script: name: Build and Test
 
 ```C#
+name: Build and Test
+
 on: push
 
 jobs:
@@ -28,7 +31,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2.1.0
-      - run: dotnet test GoSpeak/Tests/Tests.csproj
+      - run: dotnet test GoSpeak/Tests/Tests.csproj --filter Test=Unit
 ```
 
 # Task runner
