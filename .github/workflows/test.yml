@@ -15,4 +15,4 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2.1.0
-      - run: dotnet run --project .\QuestionService\QuestionService.csproj && dotnet test GoSpeak/Tests/Tests.csproj
+      - run: dotnet test GoSpeak/Tests/Tests.csproj --filter Test=Unit
