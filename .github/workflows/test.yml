@@ -1,0 +1,18 @@
+name: Build and Test
+
+on: push
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: dotnet build GoSpeak/GoSpeak.sln
+    
+  tests:
+    name: Unit Testing
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2.1.0
+      - run: dotnet test GoSpeak/Tests/Tests.csproj
