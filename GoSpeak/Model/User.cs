@@ -1,4 +1,4 @@
-﻿namespace Model
+﻿namespace GoSpeak.Model
 {
     //class for Authorized/Not Authorized user
     public class User
