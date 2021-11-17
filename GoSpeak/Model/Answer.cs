@@ -1,4 +1,4 @@
-﻿namespace Model
+﻿namespace GoSpeak.Model
 {
     public class Answer
     {
