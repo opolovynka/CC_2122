@@ -1,85 +1,46 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Model;
-using System;
+using GoSpeak.Model;
+using System.Text.Json;
+using System.Threading.Tasks;
+using GoSpeak.QuestionService.Services;
 
-namespace QuestionService.Controllers
+namespace GoSpeak.QuestionService.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class QuestionController : ControllerBase
     {
         
         private readonly ILogger<QuestionController> _logger;
+        private readonly IQuestionService _questionService;
 
-        public QuestionController(ILogger<QuestionController> logger)
+        public QuestionController(ILogger<QuestionController> logger, IQuestionService questionService)
         {
             _logger = logger;
+            _questionService = questionService;
         }
 
         [HttpGet]
-        public Question Question(int userId, Question q = null)
+        [Route("{userId}/{questionId?}")]
+        public async Task<IActionResult> Get(int userId, int questionId = 0)
         {
             if (userId <= 0)
             {
                 _logger.LogError($"{nameof(userId)} = {userId} which is <= 0");
-                throw new ArgumentException($"Arugment {nameof(userId)} is wrong. It can be less or equal 0");
+                
+                return BadRequest($"Parameter '{nameof(userId)}' is wrong. It should be more then 0");
             }
 
-            if (q == null)
-            {
-                return new Question()
-                {
-                    Id = 1,
-                    QuestionText = "I can't find my keys. I don't know where ____ are.",
-                    CorrectAnswerId = 3,
-                    Answers = new Answer[]
-                    {
-                        new Answer
-                        {
-                            Id = 1,
-                            AnswerText = "a. it"
-                        },
-                        new Answer
-                        {
-                            Id = 2,
-                            AnswerText = "b. them"
-                        },
-                         new Answer
-                        {
-                            Id = 3,
-                            AnswerText = "c. they correct"
-                        }
-                    }
-                };
-            }
-            else
-            {
-                return new Question()
-                {
-                    Id = 1,
-                    QuestionText = "I can't find my keys. I don't know where ____ are.",
-                    CorrectAnswerId = 3,
-                    Answers = new Answer[]
-                    {
-                        new Answer
-                        {
-                            Id = 1,
-                            AnswerText = "a. it"
-                        },
-                        new Answer
-                        {
-                            Id = 2,
-                            AnswerText = "b. them"
-                        },
-                         new Answer
-                        {
-                            Id = 3,
-                            AnswerText = "c. they correct"
-                        }
-                    }
-                };
-            }
+            Question result = await _questionService.GetQuestion(userId, questionId);
+
+            return Ok(JsonSerializer.Serialize(result));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(JsonSerializer.Serialize(await _questionService.GetAllQuestions()));
         }
     }
 }
