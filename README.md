@@ -1,4 +1,5 @@
 # GoSpeak v.0.2.6
+[![Build and Test](https://github.com/opolovynka/GoSpeak/actions/workflows/test.yml/badge.svg)](https://github.com/opolovynka/GoSpeak/actions/workflows/test.yml)
 
 ## Description
 This system will help you to recognize your language level and monitor your progress. Also, it will help you appropriate users which you can practice with in the best way possible. 
