@@ -38,7 +38,7 @@ namespace GoSpeak.QuestionService.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> Get()
         {
             return Ok(JsonSerializer.Serialize(await _questionService.GetAllQuestions()));
         }
