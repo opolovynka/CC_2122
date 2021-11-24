@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 
 namespace GoSpeak.QuestionService
 {
@@ -49,7 +48,7 @@ namespace GoSpeak.QuestionService
             });
 
             //preseed database from json file
-            var dataText = System.IO.File.ReadAllText(@"./../data.json");
+            var dataText = System.IO.File.ReadAllText(@"./data/data.json");
             Seeder.Seedit(dataText, app.ApplicationServices);
         }
     }
