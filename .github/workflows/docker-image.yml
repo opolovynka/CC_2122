@@ -1,9 +1,12 @@
 name: Push Docker image to Docker Hub
 
-on: push
+on:
+  workflow_run:
+    workflows: ["Build and Test"]
+    types: [completed]
 
 jobs:
-  publish:
+  on-success:
     name: Push Docker image
     runs-on: ubuntu-latest
     steps:
