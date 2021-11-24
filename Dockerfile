@@ -7,7 +7,7 @@ RUN dotnet test Tests/Tests.csproj --filter Test=Unit
  
 RUN dotnet restore QuestionService/QuestionService.csproj && dotnet publish QuestionService/QuestionService.csproj -c Release -o QuestionService/publish
 
-COPY GoSpeak/data.json app/QuestionService/publish/data/
+COPY GoSpeak/data.json QuestionService/publish/data/
 
 
 #create a new layer using the cut-down aspnet runtime image
