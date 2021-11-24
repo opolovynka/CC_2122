@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using GoSpeak.Model;
+using System.Text.Json;
 
 public static class Seeder
 {
@@ -11,7 +11,7 @@ public static class Seeder
     public static void Seedit(string jsonData, IServiceProvider serviceProvider)
     {        
         List<Question> questions =
-         JsonConvert.DeserializeObject<List<Question>>(
+         JsonSerializer.Deserialize<List<Question>>(
            jsonData);
         using (
          var serviceScope = serviceProvider
