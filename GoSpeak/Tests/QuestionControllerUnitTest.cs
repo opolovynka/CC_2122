@@ -9,15 +9,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GoSpeak.Tests
 {
-    public class QuestionControllerUnitTest
+    public class QuestionsControllerUnitTest
     {
-        ILogger<QuestionController> _logger = new Mock<ILogger<QuestionController>>().Object;
+        ILogger<QuestionsController> _logger = new Mock<ILogger<QuestionsController>>().Object;
         IQuestionService _questionService = new Mock<IQuestionService>().Object;
-        private readonly QuestionController _controller;
+        private readonly QuestionsController _controller;
 
-        public QuestionControllerUnitTest()
+        public QuestionsControllerUnitTest()
         {
-            _controller = new QuestionController(_logger, _questionService);
+            _controller = new QuestionsController(_logger, _questionService);
         }
 
         [Fact]
