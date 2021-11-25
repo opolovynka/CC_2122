@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS downloadnodejs
 RUN mkdir -p nodejsfolder
 WORKDIR /nodejsfolder
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop';$ProgressPreference='silentlyContinue';"]
-RUN Invoke-WebRequest -OutFile nodejs.zip -UseBasicParsing "https://nodejs.org/dist/v10.16.3/node-v10.16.3-win-x64.zip"; Expand-Archive nodejs.zip -DestinationPath C:\\; Rename-Item "node-v10.16.3-win-x64" nodejs
+RUN Invoke-WebRequest -OutFile nodejs.zip -UseBasicParsing "https://nodejs.org/dist/v10.16.3/node-v10.16.3-win-x64.zip"; Expand-Archive nodejs.zip -DestinationPath .; Rename-Item "node-v10.16.3-win-x64" nodejs
 
 # running build and publish
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
