@@ -1,13 +1,9 @@
-# downloading nodejs
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS downloadnodejs
-RUN mkdir -p nodejsfolder
-WORKDIR /nodejsfolder
-SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop';$ProgressPreference='silentlyContinue';"]
-RUN Invoke-WebRequest -OutFile nodejs.zip -UseBasicParsing "https://nodejs.org/dist/v10.16.3/node-v10.16.3-win-x64.zip"; Expand-Archive nodejs.zip -DestinationPath .; Rename-Item "node-v10.16.3-win-x64" nodejs
+# nodejs
+FROM node:lts-buster-slim AS node_base
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+COPY --from=node_base . .
 
 # running build and publish
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-COPY --from=downloadnodejs nodejsfolder/nodejs /Windows/system32
 # copy our solution to app folder
 COPY ./GoSpeak/ /app
 # switch to the folder app
