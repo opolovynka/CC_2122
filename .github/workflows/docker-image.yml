@@ -7,7 +7,7 @@ on:
 
 jobs:
   on-success:
-    if: always() && (needs.build.result != 'failure' && needs.tests.result != 'failure')
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Push Docker image
     runs-on: ubuntu-latest
     steps:
