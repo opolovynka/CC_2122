@@ -7,7 +7,7 @@ RUN Invoke-WebRequest -OutFile nodejs.zip -UseBasicParsing "https://nodejs.org/d
 
 # running build and publish
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-COPY --from=downloadnodejs nodejs /Windows/system32
+COPY --from=downloadnodejs nodejsfolder/nodejs /Windows/system32
 # copy our solution to app folder
 COPY ./GoSpeak/ /app
 # switch to the folder app
