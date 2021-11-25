@@ -9,13 +9,13 @@ namespace GoSpeak.QuestionService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class QuestionController : ControllerBase
+    public class QuestionsController : ControllerBase
     {
         
-        private readonly ILogger<QuestionController> _logger;
+        private readonly ILogger<QuestionsController> _logger;
         private readonly IQuestionService _questionService;
 
-        public QuestionController(ILogger<QuestionController> logger, IQuestionService questionService)
+        public QuestionsController(ILogger<QuestionsController> logger, IQuestionService questionService)
         {
             _logger = logger;
             _questionService = questionService;
