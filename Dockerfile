@@ -1,13 +1,13 @@
 # downloading nodejs
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS downloadnodejs
-RUN mkdir -p C:\\nodejsfolder
-WORKDIR C:\\nodejsfolder
+RUN mkdir -p nodejsfolder
+WORKDIR /nodejsfolder
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop';$ProgressPreference='silentlyContinue';"]
-RUN Invoke-WebRequest -OutFile nodejs.zip -UseBasicParsing "https://nodejs.org/dist/v10.16.3/node-v10.16.3-win-x64.zip"; Expand-Archive nodejs.zip -DestinationPath C:\\; Rename-Item "C:\\node-v10.16.3-win-x64" C:\\nodejs
+RUN Invoke-WebRequest -OutFile nodejs.zip -UseBasicParsing "https://nodejs.org/dist/v10.16.3/node-v10.16.3-win-x64.zip"; Expand-Archive nodejs.zip -DestinationPath C:\\; Rename-Item "node-v10.16.3-win-x64" nodejs
 
 # running build and publish
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-COPY --from=downloadnodejs C:\\nodejs C:\\Windows\\system32
+COPY --from=downloadnodejs nodejs /Windows/system32
 # copy our solution to app folder
 COPY ./GoSpeak/ /app
 # switch to the folder app
