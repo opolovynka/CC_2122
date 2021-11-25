@@ -1,12 +1,23 @@
+# downloading nodejs
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS downloadnodejs
+RUN mkdir -p C:\\nodejsfolder
+WORKDIR C:\\nodejsfolder
+SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop';$ProgressPreference='silentlyContinue';"]
+RUN Invoke-WebRequest -OutFile nodejs.zip -UseBasicParsing "https://nodejs.org/dist/v10.16.3/node-v10.16.3-win-x64.zip"; Expand-Archive nodejs.zip -DestinationPath C:\\; Rename-Item "C:\\node-v10.16.3-win-x64" C:\\nodejs
+
+# running build and publish
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+COPY --from=downloadnodejs C:\\nodejs C:\\Windows\\system32
+# copy our solution to app folder
 COPY ./GoSpeak/ /app
-
+# switch to the folder app
 WORKDIR /app
-RUN dotnet restore Tests/Tests.csproj
-RUN dotnet test Tests/Tests.csproj --filter Test=Unit
- 
-RUN dotnet restore QuestionService/QuestionService.csproj && dotnet publish QuestionService/QuestionService.csproj -c Release -o QuestionService/publish
+# restore test project dependencies and run tests
+RUN npm test
 
+# restore API project and build release/publish builded project ot QuestionService/publish folder
+RUN npm run publish
+#copy data file which will be used for seed data
 COPY GoSpeak/data.json QuestionService/publish/data/
 
 
@@ -15,7 +26,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS runtime
 WORKDIR /app
 # copy over the files produced when publishing the service
 COPY --from=build app/QuestionService/publish  ./
-# expose port 80 as our application will be listening on this port
+# expose ports 5000 and 50001 as our application will be listening on this port
 EXPOSE 5000
+EXPOSE 5001
 # run the web api when the docker image is started
 ENTRYPOINT ["dotnet", "/app/GoSpeak.QuestionService.dll"]
