@@ -7,6 +7,7 @@ on:
 
 jobs:
   on-success:
+    if: always() && (needs.build.result != 'failure' && needs.tests.result != 'failure')
     name: Push Docker image
     runs-on: ubuntu-latest
     steps:
