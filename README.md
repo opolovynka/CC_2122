@@ -1,4 +1,4 @@
-# GoSpeak v.0.2.6
+# GoSpeak v.0.3.1
 [![Build and Test](https://github.com/opolovynka/GoSpeak/actions/workflows/test.yml/badge.svg)](https://github.com/opolovynka/GoSpeak/actions/workflows/test.yml)
 [![Push Docker image to Docker Hub](https://github.com/opolovynka/GoSpeak/actions/workflows/docker-image.yml/badge.svg)](https://github.com/opolovynka/GoSpeak/actions/workflows/docker-image.yml)
 
@@ -22,3 +22,6 @@ Here you can find [User Story](https://github.com/opolovynka/GoSpeak/blob/master
 
 ## Test
 Link to the [test documentation](https://github.com/opolovynka/GoSpeak/blob/master/docs/Tests.md) which describe test framework and the decision was made for select it.
+
+## Docker
+Link to the [Docker documentation](https://github.com/opolovynka/GoSpeak/blob/master/docs/Docker.md) which describe Docker configuration and how to do implement CI for it using github actions.

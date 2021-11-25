@@ -130,6 +130,25 @@ in the line
 Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 24 ms
 ```
 we can see thet 2 tests were run and they passed ok.
+We can check our image to run it as container by running this command:
+
+```powershell
+docker run --rm -it -p 5000:80 opolovynka/gospeak:last
+```
+the result is :
+```powershell
+info: Microsoft.Hosting.Lifetime[0]   
+      Now listening on: http://[::]:80
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: C:\app
+```
+
+we can see that our application is running and if we will call the link http://localhost:5000/api/questions/ in the browser, we will recive json string with all questions we have regarding to the [API document](https://github.com/opolovynka/GoSpeak/blob/master/docs/API.md)
+
 Then we need to publish our container. To do so, we have to decide which registry to choose. Except of Docker hub repository there're plenty of different different registries like:
 * [Amazon Elastic Container Registry](https://aws.amazon.com/ecr/) mostly
 * [Google Container registry](https://cloud.google.com/container-registry/)
@@ -150,9 +169,85 @@ also we choosed to link our repository to the GitHub repository ![image](https:/
 2) We will use 'latest' tag for our built
 3) and we have select Dockerfile in our repostitory
 ![image](https://user-images.githubusercontent.com/91627367/143447837-9a486497-0bbb-4118-8ded-430d042131b4.png)
+
 4) Also we point to the context in which our build will be starting
 5) and that's it, press Continue
 
 Then you will see main page of your repository which will be showing you created trigger:
 ![image](https://user-images.githubusercontent.com/91627367/143448053-f50e8c0a-d830-47d1-8813-6fcf54b9d75d.png)
+
+now we can see, when we push something to the repository it initiating the build:
+![image](https://user-images.githubusercontent.com/91627367/143450063-1d1b77c9-600f-4eaa-abee-c66a47da96e6.png)
+
+And after it finished we can see the results of the built:
+![image](https://user-images.githubusercontent.com/91627367/143450191-3c4952b3-32be-4ee6-8138-74211128b68f.png)
+
+To Configurate buid and publish our image to the Docker Hub, we will use GiHub action:
+* for this we have to configurate our secrets for Docker Hub, our login and password, which will be using while we publish. So, go to > Repository> Settings>Secrets
+![image](https://user-images.githubusercontent.com/91627367/143485752-ce025fff-b5cf-43bf-9968-d2281fc936b4.png)
+![image](https://user-images.githubusercontent.com/91627367/143486590-1df2083c-28a9-4fc0-be48-5ce649db70d5.png)
+
+Then press New repository secret
+![image](https://user-images.githubusercontent.com/91627367/143486581-e0f07900-2e92-4e28-a841-6fe37985a0ac.png)
+And then we have to add our secrets
+![image](https://user-images.githubusercontent.com/91627367/143486689-b97cf33b-bb8e-4946-85d9-342dc9080859.png)
+
+1) Enter secret's name: DOCKER_PASSWORD
+2) Enter login for docker: opolovynka in our case
+3) Press Add secret
+
+The same we have to do with password:
+1) Enter secret's name: DOCKER_USERNAME
+2) Enter value for the password
+3) Press Add secret.
+
+Now we can use this variables in our github acction:
+* Let's create new workflow, go to Actions > New workflow
+![image](https://user-images.githubusercontent.com/91627367/143487740-12091faf-a4ea-40f0-b84f-d78916c71ace.png)
+now we have to add code of this worklof, we will run it only, if [build and test](https://github.com/opolovynka/GoSpeak/blob/master/docs/Tests.md) passed successefully. So, code will be
+
+```yaml
+name: Push Docker image to Docker Hub
+
+on:
+  workflow_run:
+    workflows: ["Build and Test"]
+    types: [completed]
+
+jobs:
+  on-success:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Push Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: opolovynka/gospeak
+          tags: latest
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+```
+
+So, now if our commit were successfully build and tested, it will be automatically published to Docker hub:
+![image](https://user-images.githubusercontent.com/91627367/143488430-46c0fc48-9a95-4895-8663-3004070f8fe5.png)
+![image](https://user-images.githubusercontent.com/91627367/143489201-6de38e59-3e8b-47dc-99ba-4b49f277b2d5.png)
+
+In summary we have created Dockerfile wich used to build new image for our application. We configurated **githubactions** to build and publish our image to Docker registry and also configurated Quay Docker registry to build our images.
 
