@@ -3,9 +3,10 @@
   "version": "0.2.6",
 
   "scripts": {
-    "setup": "npm install && dotnet build",
-    "test": "dotnet test",
-    "setup_all": "npm run setup && npm run test"
+    "preinstall": "dotnet restore QuestionService/QuestionService.csproj && dotnet publish QuestionService/QuestionService.csproj -c Release -o QuestionService/publish",
+    "test": "dotnet restore Tests/Tests.csproj && dotnet test Tests/Tests.csproj --filter Test=Unit",
+    "publish": "dotnet restore QuestionService/QuestionService.csproj && dotnet publish QuestionService/QuestionService.csproj -c Release -o QuestionService/publish",
+    "setup_all": "npm run preinstall && npm run test"
   },
   "testRunner": "dotnet-test-xunit",
   "dependencies": {
