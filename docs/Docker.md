@@ -12,17 +12,25 @@ To build and test our code we will use mcr.microsoft.com/dotnet/sdk:5.0 image wh
 To run application we will use mcr.microsoft.com/dotnet/aspnet:5.0 image and it will be our last layer of the image.
 
 ```Dockerfile
+# downloading nodejs
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS downloadnodejs
+RUN mkdir -p C:\\nodejsfolder
+WORKDIR C:\\nodejsfolder
+SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop';$ProgressPreference='silentlyContinue';"]
+RUN Invoke-WebRequest -OutFile nodejs.zip -UseBasicParsing "https://nodejs.org/dist/v10.16.3/node-v10.16.3-win-x64.zip"; Expand-Archive nodejs.zip -DestinationPath C:\\; Rename-Item "C:\\node-v10.16.3-win-x64" C:\\nodejs
+
+# running build and publish
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+COPY --from=downloadnodejs C:\\nodejs C:\\Windows\\system32
 # copy our solution to app folder
 COPY ./GoSpeak/ /app
 # switch to the folder app
 WORKDIR /app
 # restore test project dependencies and run tests
-RUN dotnet restore Tests/Tests.csproj
-RUN dotnet test Tests/Tests.csproj --filter Test=Unit
+RUN npm test
 
 # restore API project and build release/publish builded project ot QuestionService/publish folder
-RUN dotnet restore QuestionService/QuestionService.csproj && dotnet publish QuestionService/QuestionService.csproj -c Release -o QuestionService/publish
+RUN npm run publish
 #copy data file which will be used for seed data
 COPY GoSpeak/data.json QuestionService/publish/data/
 
