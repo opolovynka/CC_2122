@@ -9,39 +9,33 @@ What is Dockerfile you can read [here](https://docs.docker.com/engine/reference/
 | mcr.microsoft.com/dotnet/sdk:5.0 | .NET 5, with SDKs included, on Linux and Windows (multi-arch) |
 
 To build and test our code we will use mcr.microsoft.com/dotnet/sdk:5.0 image which will allow to build our project and run all tests to check if our code is working.
-To run application we will use mcr.microsoft.com/dotnet/aspnet:5.0 image and it will be our last layer of the image.
+
 Also to run our scripts for npm we have to install it as well. Based on [this article](https://hyr.mn/docker-dotnet5/) we will add FROM node:lts-buster-slim AS node_base layer to copy nodejs.
 
 ```Dockerfile
 # nodejs
 FROM node:lts-buster-slim AS node_base
+#new build layer
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 COPY --from=node_base . .
 
-# running build and publish
 # copy our solution to app folder
 COPY ./GoSpeak/ /app
+
+# add new user to the container
+RUN useradd -ms /bin/bash tstuser
+#set user as owner of the app folder
+RUN chown -R tstuser /app
+# set permissions for app folder
+RUN chmod 755 /app
+
+USER tstuser
 # switch to the folder app
 WORKDIR /app
 # restore test project dependencies and run tests
 RUN npm test
-
-# restore API project and build (release/publish build) project to QuestionService/publish folder
-RUN npm run publish
-#copy data file which will be used for seed data
-COPY GoSpeak/data.json QuestionService/publish/data/
-
-
-#create a new layer using the cut-down aspnet runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS runtime
-WORKDIR /app
-# copy over the files produced when publishing the service
-COPY --from=build app/QuestionService/publish  ./
-# expose ports 5000 and 50001 as our application will be listening on this port
-EXPOSE 5000
-EXPOSE 5001
-# run the web api when the docker image is started
-ENTRYPOINT ["dotnet", "/app/GoSpeak.QuestionService.dll"]
+#run tests
+CMD ["npm", "test"]
 ```
 
 * Publish image
@@ -54,105 +48,62 @@ we will have out
 
 ```powershell
 PS C:\Users\alexe\source\repos\Univer\CloudComputing_Fundamentos\CC_2122> docker build -t opolovynka/gospeak:last .
-Sending build context to Docker daemon   12.6MB
-Step 1/13 : FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
- ---> 9e7e9cb04357
-Step 2/13 : COPY ./GoSpeak/ /app
- ---> e471222c865a
-Step 3/13 : WORKDIR /app
- ---> Running in 465cfc401b88
-Removing intermediate container 465cfc401b88
- ---> 70baa614ccba
-Step 4/13 : RUN dotnet restore Tests/Tests.csproj
- ---> Running in 595378385c27
-  Determining projects to restore...
-  Restored C:\app\QuestionService\QuestionService.csproj (in 3.87 sec).
-  Restored C:\app\Model\Model.csproj (in 17 ms).
-  Restored C:\app\Tests\Tests.csproj (in 8.25 sec).
-Removing intermediate container 595378385c27
- ---> 7a6cc3d3cc6b
-Step 5/13 : RUN dotnet test Tests/Tests.csproj --filter Test=Unit
- ---> Running in 4e65120a8c93
+[+] Building 24.0s (15/15) FINISHED
+ => [internal] load build definition from Dockerfile                                                                                 0.0s 
+ => => transferring dockerfile: 32B                                                                                                  0.0s 
+ => [internal] load .dockerignore                                                                                                    0.0s 
+ => => transferring context: 2B                                                                                                      0.0s 
+ => [internal] load metadata for mcr.microsoft.com/dotnet/sdk:5.0                                                                    0.3s 
+ => [internal] load metadata for docker.io/library/node:lts-buster-slim                                                              0.7s 
+ => [internal] load build context                                                                                                    0.1s 
+ => => transferring context: 22.68kB                                                                                                 0.1s 
+ => [node_base 1/1] FROM docker.io/library/node:lts-buster-slim@sha256:a5eecf2ee53935cb7974dfff42260d97289d61be9d7a2062c693be93c0cd  0.0s 
+ => [build 1/8] FROM mcr.microsoft.com/dotnet/sdk:5.0@sha256:b2f3f15ee6100efdd36819a429b75d936e4be71bb2487cc48223554f08e11285        0.0s 
+ => CACHED [build 2/8] COPY --from=node_base . .                                                                                     0.0s 
+ => [build 3/8] COPY ./GoSpeak/ /app                                                                                                 0.1s 
+ => [build 5/8] RUN chown -R tstuser /app                                                                                            1.1s 
+ => [build 6/8] RUN chmod 755 /app                                                                                                   0.6s 
+ => [build 7/8] WORKDIR /app                                                                                                         0.0s 
+ => [build 8/8] RUN npm test                                                                                                        19.0s 
+ => exporting to image                                                                                                               1.8s 
+ => => exporting layers                                                                                                              1.7s 
+ => => writing image sha256:aca1b96e4ee75819d3aa4e078e02629f8aa5949104aadbca87f33e69a50347b5                                         0.0s 
+ => => naming to docker.io/opolovynka/gospeak:latest                                                                                 0.0s 
+
+Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
+```
+
+We can check our image to run it as container by running this command:
+
+```powershell
+docker run opolovynka/gospeak:last
+```
+the result is :
+```powershell
+PS C:\Users\alexe\source\repos\Univer\CloudComputing_Fundamentos\CC_2122> docker run opolovynka/gospeak
+
+> GoSpeak@0.2.6 test
+> dotnet test Test/Tests.csproj --filter Test=Unit
+
   Determining projects to restore...
   All projects are up-to-date for restore.
-  Model -> C:\app\Model\bin\Debug\net5.0\GoSpeak.Model.dll
-  QuestionService -> C:\app\QuestionService\bin\Debug\net5.0\GoSpeak.QuestionService.dll
-  Tests -> C:\app\Tests\bin\Debug\net5.0\GoSpeak.Tests.dll
-Test run for C:\app\Tests\bin\Debug\net5.0\GoSpeak.Tests.dll (.NETCoreApp,Version=v5.0)
+  Model -> /app/Model/bin/Debug/net5.0/GoSpeak.Model.dll
+  QuestionService -> /app/QuestionService/bin/Debug/net5.0/GoSpeak.QuestionService.dll
+  Tests -> /app/Test/bin/Debug/net5.0/GoSpeak.Tests.dll
+Test run for /app/Test/bin/Debug/net5.0/GoSpeak.Tests.dll (.NETCoreApp,Version=v5.0)
 Microsoft (R) Test Execution Command Line Tool Version 16.11.0
 Copyright (c) Microsoft Corporation.  All rights reserved.
 
 Starting test execution, please wait...
 A total of 1 test files matched the specified pattern.
 
-Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 24 ms - GoSpeak.Tests.dll (net5.0)
-Removing intermediate container 4e65120a8c93
- ---> ec8d406fed7d
-Step 6/13 : RUN dotnet restore QuestionService/QuestionService.csproj && dotnet publish QuestionService/QuestionService.csproj -c Release -o QuestionService/publish
- ---> Running in 3ef1de405133
-  Determining projects to restore...
-  All projects are up-to-date for restore.
-Microsoft (R) Build Engine version 16.11.2+f32259642 for .NET
-Copyright (C) Microsoft Corporation. All rights reserved.
-
-  Determining projects to restore...
-  All projects are up-to-date for restore.
-  Model -> C:\app\Model\bin\Release\net5.0\GoSpeak.Model.dll
-  QuestionService -> C:\app\QuestionService\bin\Release\net5.0\GoSpeak.QuestionService.dll
-  QuestionService -> C:\app\QuestionService\publish\
-Removing intermediate container 3ef1de405133
- ---> 181657650762
-Step 7/13 : COPY GoSpeak/data.json QuestionService/publish/data/
- ---> 75e9971876ea
-Step 8/13 : FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS runtime
- ---> c33fcdbcf9e5
-Step 9/13 : WORKDIR /app
- ---> Using cache
- ---> adf02f549819
-Step 10/13 : COPY --from=build app/QuestionService/publish  ./
- ---> Using cache
- ---> b6d68242f51b
-Step 11/13 : EXPOSE 5000
- ---> Using cache
- ---> 0c90aec24ba3
-Step 12/13 : EXPOSE 5001
- ---> Running in 47c7929d32ab
-Removing intermediate container 47c7929d32ab
- ---> 8fda3185b6da
-Step 13/13 : ENTRYPOINT ["dotnet", "/app/GoSpeak.QuestionService.dll"]
- ---> Running in 0987dcda9cc7
-Removing intermediate container 0987dcda9cc7
- ---> 405dcc4f66ad
-Successfully built 405dcc4f66ad
-Successfully tagged opolovynka/gospeak:last
-
-Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
-command, which will build a new image for us.
+Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 4 ms - /app/Test/bin/Debug/net5.0/GoSpeak.Tests.dll (net5.0)
 ```
-
 in the line 
 ```powershell
 Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 24 ms
 ```
 we can see that 2 tests were run and they passed ok.
-We can check our image to run it as container by running this command:
-
-```powershell
-docker run --rm -it -p 5000:80 opolovynka/gospeak:last
-```
-the result is :
-```powershell
-info: Microsoft.Hosting.Lifetime[0]   
-      Now listening on: http://[::]:80
-info: Microsoft.Hosting.Lifetime[0]
-      Application started. Press Ctrl+C to shut down.
-info: Microsoft.Hosting.Lifetime[0]
-      Hosting environment: Production
-info: Microsoft.Hosting.Lifetime[0]
-      Content root path: C:\app
-```
-
-we can see that our application is running and if we will call the link http://localhost:5000/api/questions/ in the browser, we will receive json string with all questions we have regarding to the [API document](https://github.com/opolovynka/GoSpeak/blob/master/docs/API.md)
 
 Then we need to publish our container. To do so, we have to decide which registry to choose. Except of Docker hub repository there are plenty of different different registries like:
 * [Amazon Elastic Container Registry](https://aws.amazon.com/ecr/) mostly
