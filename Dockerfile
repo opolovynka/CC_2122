@@ -3,27 +3,18 @@ FROM node:lts-buster-slim AS node_base
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 COPY --from=node_base . .
 
-# running build and publish
 # copy our solution to app folder
 COPY ./GoSpeak/ /app
+
+# add new user to the container
+RUN useradd -ms /bin/bash tstuser
+#set user as owner of the app folder
+RUN chown -R tstuser /app
+# set permissions for app folder
+RUN chmod 755 /app
+
+USER tstuser
 # switch to the folder app
 WORKDIR /app
 # restore test project dependencies and run tests
 RUN npm test
-
-# restore API project and build release/publish builded project ot QuestionService/publish folder
-RUN npm run publish
-#copy data file which will be used for seed data
-COPY GoSpeak/data.json QuestionService/publish/data/
-
-
-#create a new layer using the cut-down aspnet runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS runtime
-WORKDIR /app
-# copy over the files produced when publishing the service
-COPY --from=build app/QuestionService/publish  ./
-# expose ports 5000 and 50001 as our application will be listening on this port
-EXPOSE 5000
-EXPOSE 5001
-# run the web api when the docker image is started
-ENTRYPOINT ["dotnet", "/app/GoSpeak.QuestionService.dll"]
