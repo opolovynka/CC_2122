@@ -7,4 +7,4 @@ controller:
 fichero_tareas:
   - GoSpeak/package.json
 test:
-  - GoSpeak/Tests/QuestionControllerTest.cs 
+  - GoSpeak/Test/QuestionControllerTest.cs 
