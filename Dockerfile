@@ -1,5 +1,6 @@
 # nodejs
 FROM node:lts-buster-slim AS node_base
+#new build layer
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 COPY --from=node_base . .
 
@@ -18,3 +19,5 @@ USER tstuser
 WORKDIR /app
 # restore test project dependencies and run tests
 RUN npm test
+
+CMD ["npm", "test"]
