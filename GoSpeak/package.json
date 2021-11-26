@@ -4,8 +4,9 @@
 
   "scripts": {
     "preinstall": "dotnet restore QuestionService/QuestionService.csproj && dotnet publish QuestionService/QuestionService.csproj -c Release -o QuestionService/publish",
-    "test": "dotnet restore Tests/Tests.csproj && dotnet test Tests/Tests.csproj --filter Test=Unit",
+    "test": "dotnet test Test/Tests.csproj --filter Test=Unit",
     "publish": "dotnet restore QuestionService/QuestionService.csproj && dotnet publish QuestionService/QuestionService.csproj -c Release -o QuestionService/publish",
+    "setup_test": "dotnet restore Test/Tests.csproj",
     "setup_all": "npm run preinstall && npm run test"
   },
   "testRunner": "dotnet-test-xunit",
