@@ -1,0 +1,7 @@
+language: csharp
+mono: none
+dotnet: 5.0
+script:
+ - dotnet restore /GoSpeak/GoSpeak.sln
+ - dotnet build /GoSpeak/GoSpeak.sln
+ - dotnet test /GoSpeak/Test/Tests.csproj --filter Test=Unit
