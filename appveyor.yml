@@ -1,0 +1,10 @@
+version: 1.0.{build}
+cache: C:\Users\appveyor\.dnx\packages
+before_build:
+- cmd: dotnet restore GoSpeak\GoSpeak.sln
+build_script:
+- cmd: dotnet build GoSpeak\GoSpeak.sln
+test_script:
+- cmd: dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit
+build:
+  verbosity: normal
