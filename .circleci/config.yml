@@ -23,7 +23,7 @@ jobs:
           working_directory: ~/project/App.Tests
           name: Run tests
           command: |
-            dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit
+            ls && dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
