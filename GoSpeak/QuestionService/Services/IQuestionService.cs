@@ -6,7 +6,7 @@ namespace GoSpeak.QuestionService.Services
 {
     public interface IQuestionService
     {
-        public Task<List<Question>> GetAllQuestions();
-        public Task<Question> GetQuestion(int userId, int questionId);
+        Task<List<Question>> GetAllQuestions();
+        Task<Question> GetQuestion(int userId, int questionId);
     }
 }

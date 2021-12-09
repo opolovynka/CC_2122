@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using GoSpeak.Model;
-using System.Text.Json;
+
 using System.Threading.Tasks;
 using GoSpeak.QuestionService.Services;
+using Newtonsoft.Json;
 
 namespace GoSpeak.QuestionService.Controllers
 {
@@ -34,13 +35,13 @@ namespace GoSpeak.QuestionService.Controllers
 
             Question result = await _questionService.GetQuestion(userId, questionId);
 
-            return Ok(JsonSerializer.Serialize(result));
+            return Ok(JsonConvert.SerializeObject(result));
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(JsonSerializer.Serialize(await _questionService.GetAllQuestions()));
+            return Ok(JsonConvert.SerializeObject(await _questionService.GetAllQuestions()));
         }
     }
 }
