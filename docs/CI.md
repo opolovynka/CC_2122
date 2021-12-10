@@ -11,4 +11,6 @@ To configurate Travis we have to SignUp with our GitHub account and configurate 
 * I had problems with my email confirmation, ![image](https://user-images.githubusercontent.com/91627367/145447877-54974778-9fd7-4f42-a805-890f529f125c.png)
 because I haven't recieve the email to confirm my email and couldn't finish configuration of Travis, but after few days, I've recieved this email, and finally could make it works
 * you will recieve email which says that your account was activated
+* also we have to select some plan to run our builds, there is Free plan which allow to to run 10000 credits![image](https://user-images.githubusercontent.com/91627367/145448841-418eb0e0-8c25-47a7-bad9-552fdb380a6b.png)
+* then we have to activate repostitory for which we want to configurate our CI process
 * 
