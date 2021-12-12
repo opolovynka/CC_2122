@@ -33,8 +33,6 @@ workflows:
           test-target-framework: net6.0
           requires:
             - build-netstandard-2
-      - test-windows-netframework-4-5-2:
-          name: .NET Framework 4.5.2
 
 orbs:
   win: circleci/windows@1.0.0
@@ -99,29 +97,4 @@ jobs:
             - /root/.nuget/packages
       - run:
           name: "Run Application Tests"
-          command: dotnet.exe test GoSpeak/Test/Tests.csproj --filter Test=Unit -v n --results-directory:test_coverage --collect:"Code Coverage"
-
-  test-windows-netframework-4-5-2:
-    executor:
-      name: win/vs2019
-      shell: powershell.exe
-    environment:
-      TESTFRAMEWORK: net452
-    steps:
-      - checkout
-      - restore_cache:
-          keys: # see comments under build-netstandard-2
-            - deps-net452-net46-{{ checksum "GoSpeak/Test/Tests.csproj" }}
-      - run:
-          name: install project dependencies
-          command: dotnet restore
-      - save_cache:
-          key: deps-net452-net46-{{ checksum "GoSpeak/Test/Tests.csproj" }}
-          paths:
-            - C:\Users\circleci\.nuget\packages
-      - run:
-          name: Build Application .NET Framework 4.5.2
-          command: dotnet.exe build  GoSpeak/QuestionService/QuestionService.csproj --configuration Release
-      - run:
-          name: run tests in .NET Framework 4.5.2
           command: dotnet.exe test GoSpeak/Test/Tests.csproj --filter Test=Unit -v n --results-directory:test_coverage --collect:"Code Coverage"
