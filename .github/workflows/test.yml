@@ -7,35 +7,39 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - name: checkout project
+        uses: actions/checkout@v2
       - name: Setup .NET Core 2.1	
         uses: actions/setup-dotnet@v1	
         with:	
           dotnet-version: 2.1.x
       - name: run .net 2.1.x
-        run: dotnet build GoSpeak/GoSpeak.sln
+        run: dotnet build GoSpeak/QuestionService/QuestionService.csproj
       - name: Setup .NET Core 3.1	
         uses: actions/setup-dotnet@v1	
         with:	
           dotnet-version: 3.1.x
       - name: run .net 3.1.x
-        run: dotnet build GoSpeak/GoSpeak.sln
+        run: dotnet build GoSpeak/QuestionService/QuestionService.csproj
       - name: Setup .NET Core 5.0
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.x
       - name: run .net 5.0.x
-        run: dotnet build GoSpeak/GoSpeak.sln
+        run: dotnet build GoSpeak/QuestionService/QuestionService.csproj
       - name: Setup .NET Core 6.0
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.x
       - name: run .net 6.0.x
-        run: dotnet build GoSpeak/GoSpeak.sln
+        run: dotnet build GoSpeak/QuestionService/QuestionService.csproj
     
   tests:
     name: Unit Testing
     runs-on: windows-latest
     steps:
+      - name: checkout project
+        uses: actions/checkout@v
       - name: Setup .NET Core 2.1	
         uses: actions/setup-dotnet@v1	
         with:	
