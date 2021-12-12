@@ -18,4 +18,4 @@ USER tstuser
 # switch to the folder app
 WORKDIR /app
 # restore test project dependencies and run tests
-RUN npm test
+CMD ['dotnet', 'test']
