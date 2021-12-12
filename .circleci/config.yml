@@ -97,4 +97,4 @@ jobs:
             - /root/.nuget/packages
       - run:
           name: "Run Application Tests"
-          command: dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit
+          command: dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit -f <<parameters.test-target-framework>>
