@@ -1,9 +1,9 @@
 language: csharp
 mono: none
 dotnet: 
+ - 6.0
  - 5.0
  - 3.0
- - 2.1.502
 solution: GoSpeak/GoSpeak.sln
 script:
  - dotnet restore GoSpeak/GoSpeak.sln
