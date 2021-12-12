@@ -1,11 +1,7 @@
 version: 2.1
 
 orbs:
-  windows: 
-    - circleci/windows@2.2.0
-    - circleci/windows@2.0.0
-    - circleci/windows@1.0.0
-
+  windows: circleci/windows@1.0.0
 jobs:
   test:
     description: Setup and run application tests
