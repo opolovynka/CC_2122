@@ -1,7 +1,10 @@
 version: 2.1
 
 orbs:
-  windows: circleci/windows@2.2.0
+  windows: 
+    - circleci/windows@2.2.0
+    - circleci/windows@2.0.0
+    - circleci/windows@1.0.0
 
 jobs:
   test:
@@ -9,6 +12,9 @@ jobs:
     executor:
       name: windows/default
     steps:
+      - run:
+        name: "Dotnet version"
+        command: dotnet.exe --list-sdks
       - checkout
       - restore_cache:
           keys:
