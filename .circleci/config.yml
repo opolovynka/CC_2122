@@ -1,52 +1,100 @@
 version: 2.1
 
+workflows:
+  version: 2
+  test:
+    jobs:
+      - build-netstandard-2
+      - test-netcore:
+          name: .NET Standard 2.0 + .NET Core 2.1
+          docker-image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
+          build-target-framework: netstandard2.0
+          test-target-framework: netcoreapp2.1
+          requires:
+            - build-netstandard-2
+      - test-netcore:
+          name: .NET Standard 2.0 + .NET Core 3.1
+          docker-image: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
+          build-target-framework: netstandard2.0
+          test-target-framework: netcoreapp3.1
+          requires:
+            - build-netstandard-2
+      - test-netcore:
+          name: .NET Standard 2.0 + .NET 5.0
+          docker-image: mcr.microsoft.com/dotnet/sdk:5.0-focal
+          build-target-framework: netstandard2.0
+          test-target-framework: net5.0
+          requires:
+            - build-netstandard-2
+      - test-netcore:
+          name: .NET Standard 2.0 + .NET 6.0
+          docker-image: mcr.microsoft.com/dotnet/sdk:6.0-focal
+          build-target-framework: netstandard2.0
+          test-target-framework: net6.0
+          requires:
+            - build-netstandard-2
+
 orbs:
-  windows: 
-    - circleci/windows@2.2.0
-    - circleci/windows@2.0.0
-    - circleci/windows@1.0.0
+  win: circleci/windows@1.0.0
 
 jobs:
-  test:
-    description: Setup and run application tests
-    executor:
-      name: windows/default
+  build-netstandard-2:
+    parameters:
+      build-target-framework:
+        type: string
+        default: netstandard2.0
+    docker:
+      - image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
+    environment:
+      ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
     steps:
-      - run:
-          name: "Dotnet version"
-          command: dotnet.exe --list-sdks
       - checkout
       - restore_cache:
           keys:
+            - dotnet-packages-v1-{{ checksum "GoSpeak/QuestionService/QuestionService.csproj" }}
+      - run:
+          name: "Install project dependencies"
+          command: dotnet restore GoSpeak/QuestionService/QuestionService.csproj
+      - save_cache:
+          key: dotnet-packages-v1-{{ checksum "GoSpeak/QuestionService/QuestionService.csproj" }}
+          paths:
+            - /root/.nuget/packages
+      - run:
+         name: "Build Application according to some given configuration"
+         command: dotnet build  GoSpeak/QuestionService/QuestionService.csproj --configuration Release
+      - persist_to_workspace:
+          root: GoSpeak/QuestionService
+          paths:
+            - bin
+            - obj
+
+  test-netcore:
+    parameters:
+      docker-image:
+        type: string
+      build-target-framework:
+        type: string
+      test-target-framework:
+        type: string
+    docker:
+      - image: <<parameters.docker-image>>
+    environment:
+      ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
+      TESTFRAMEWORK: <<parameters.test-target-framework>>
+    steps:
+      - checkout
+      - attach_workspace:
+          at: GoSpeak/QuestionService
+      - restore_cache:
+          keys: # see comments under build-netstandard-2
             - dotnet-packages-v1-{{ checksum "GoSpeak/Test/Tests.csproj" }}
       - run:
           name: "Install project dependencies"
-          command: dotnet.exe restore GoSpeak/GoSpeak.sln
+          command: dotnet restore GoSpeak/Test/Tests.csproj
       - save_cache:
-          paths:
-            - C:\Users\circleci\.nuget\packages
           key: dotnet-packages-v1-{{ checksum "GoSpeak/Test/Tests.csproj" }}
+          paths:
+            - /root/.nuget/packages
       - run:
           name: "Run Application Tests"
-          command: dotnet.exe test GoSpeak/Test/Tests.csproj --filter Test=Unit -v n --results-directory:test_coverage --collect:"Code Coverage"
-      - run:
-          name: "Print Working Directory"
-          command: pwd
-      - store_artifacts:
-          path: C:\Users\circleci\project\test_coverage
-  build:
-    description: Build application with Release configuration
-    executor:
-      name: windows/default
-    steps:
-      - checkout
-      - run:
-          name: "Build Application according to some given configuration"
-          command: dotnet.exe build  GoSpeak/QuestionService/QuestionService.csproj --configuration Release
-workflows:
-  test_and_build:
-    jobs:
-      - test
-      - build:
-          requires:
-            - test
+          command: dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit -f <<parameters.test-target-framework>>
