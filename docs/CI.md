@@ -152,6 +152,51 @@ Then press Manage GitHub Checks and you will be redirected to GitHub access page
 That's it, now we have everything ready.
 
 ## GitHub Actions
+To run GiHub actions for push and pull requests and also run it for different versions of language, we have to update our github actions test.yml (which we created and updated [here](https://github.com/opolovynka/GoSpeak/blob/master/docs/Tests.md) and [here](https://github.com/opolovynka/GoSpeak/blob/master/docs/Docker.md) file to:
+```yml
+name: Build and Test
 
+on: [push, pull_request]
+jobs:
 
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout project
+        uses: actions/checkout@v2
+      - name: Setup .NET Core 2.1	
+        uses: actions/setup-dotnet@v1	
+        with:	
+          dotnet-version: 2.1.x
+      - name: run .net 2.1.x
+        run: dotnet build GoSpeak/QuestionService/QuestionService.csproj
+      - name: Setup .NET Core 3.1	
+        uses: actions/setup-dotnet@v1	
+        with:	
+          dotnet-version: 3.1.x
+      - name: run .net 3.1.x
+        run: dotnet build GoSpeak/QuestionService/QuestionService.csproj
+      - name: Setup .NET Core 5.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - name: run .net 5.0.x
+        run: dotnet build GoSpeak/QuestionService/QuestionService.csproj
+      - name: Setup .NET Core 6.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - name: run .net 6.0.x
+        run: dotnet build GoSpeak/QuestionService/QuestionService.csproj
+    
+tests:
+    name: Unit Testing
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2.1.0
+      - run: dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit
+```
+Then we will have everything ready:
+![image](https://user-images.githubusercontent.com/91627367/145729575-b2bda20d-9b6c-4351-86d3-debcd4b5f192.png)
 
