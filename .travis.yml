@@ -8,4 +8,4 @@ solution: GoSpeak/GoSpeak.sln
 script:
  - dotnet restore GoSpeak/GoSpeak.sln
  - dotnet build GoSpeak/GoSpeak.sln
- - dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit
+ - dotnet test GoSpeak/Test/Tests.csproj
