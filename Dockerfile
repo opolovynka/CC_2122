@@ -19,5 +19,3 @@ USER tstuser
 WORKDIR /app
 # restore test project dependencies and run tests
 RUN npm test
-
-CMD ["npm", "test"]
