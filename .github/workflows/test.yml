@@ -1,18 +1,67 @@
 name: Build and Test
 
-on: push
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
+
   build:
     name: Build
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: dotnet build GoSpeak/GoSpeak.sln
+      - name: Setup .NET Core 2.1	
+        uses: actions/setup-dotnet@v1	
+        with:	
+          dotnet-version: 2.1.x
+      - name: run .net 2.1.x
+        run: dotnet build GoSpeak/GoSpeak.sln
+      - name: Setup .NET Core 3.1	
+        uses: actions/setup-dotnet@v1	
+        with:	
+          dotnet-version: 3.1.x
+      - name: run .net 3.1.x
+        run: dotnet build GoSpeak/GoSpeak.sln
+      - name: Setup .NET Core 5.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - name: run .net 5.0.x
+        run: dotnet build GoSpeak/GoSpeak.sln
+      - name: Setup .NET Core 6.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - name: run .net 6.0.x
+        run: dotnet build GoSpeak/GoSpeak.sln
     
   tests:
     name: Unit Testing
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2.1.0
-      - run: dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit
+      - name: Setup .NET Core 2.1	
+        uses: actions/setup-dotnet@v1	
+        with:	
+          dotnet-version: 2.1.x
+      - name: run test .net 2.1.x
+        run: dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit
+      - name: Setup .NET Core 3.1	
+        uses: actions/setup-dotnet@v1	
+        with:	
+          dotnet-version: 3.1.x
+      - name: run test .net 3.1.x
+        run: dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit
+      - name: Setup .NET Core 5.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - name: run test .net 5.0.x
+        run: dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit
+      - name: Setup .NET Core 6.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - name: run test .net 6.0.x
+        run: dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit
