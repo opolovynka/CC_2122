@@ -13,8 +13,8 @@ jobs:
       name: windows/default
     steps:
       - run:
-        name: "Dotnet version"
-        command: dotnet.exe --list-sdks
+          name: "Dotnet version"
+          command: dotnet.exe --list-sdks
       - checkout
       - restore_cache:
           keys:
