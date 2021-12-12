@@ -1,4 +1,4 @@
-# GoSpeak v.0.3.4
+# GoSpeak v.0.4.0
 [![Build and Test](https://github.com/opolovynka/GoSpeak/actions/workflows/test.yml/badge.svg)](https://github.com/opolovynka/GoSpeak/actions/workflows/test.yml)
 [![Push Docker image to Docker Hub](https://github.com/opolovynka/GoSpeak/actions/workflows/docker-image.yml/badge.svg)](https://github.com/opolovynka/GoSpeak/actions/workflows/docker-image.yml)
 
@@ -25,3 +25,6 @@ Link to the [test documentation](https://github.com/opolovynka/GoSpeak/blob/mast
 
 ## Docker
 Link to the [Docker documentation](https://github.com/opolovynka/GoSpeak/blob/master/docs/Docker.md) which describe Docker configuration and how to do implement CI for it using github actions.
+
+## CI/CD
+Link to the [CI/CD documentation](https://github.com/opolovynka/GoSpeak/blob/master/docs/CI.md) which describe how implemented CI/CD process
