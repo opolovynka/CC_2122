@@ -54,14 +54,14 @@ jobs:
             - dotnet-packages-v1-{{ checksum "GoSpeak/QuestionService/QuestionService.csproj" }}
       - run:
           name: "Install project dependencies"
-          command: dotnet.exe restore GoSpeak/QuestionService/QuestionService.csproj
+          command: dotnet restore GoSpeak/QuestionService/QuestionService.csproj
       - save_cache:
           key: dotnet-packages-v1-{{ checksum "GoSpeak/QuestionService/QuestionService.csproj" }}
           paths:
             - /root/.nuget/packages
       - run:
          name: "Build Application according to some given configuration"
-         command: dotnet.exe build  GoSpeak/QuestionService/QuestionService.csproj --configuration Release
+         command: dotnet build  GoSpeak/QuestionService/QuestionService.csproj --configuration Release
       - persist_to_workspace:
           root: GoSpeak/QuestionService
           paths:
@@ -90,11 +90,11 @@ jobs:
             - dotnet-packages-v1-{{ checksum "GoSpeak/Test/Tests.csproj" }}
       - run:
           name: "Install project dependencies"
-          command: dotnet.exe restore GoSpeak/Test/Tests.csproj
+          command: dotnet restore GoSpeak/Test/Tests.csproj
       - save_cache:
           key: dotnet-packages-v1-{{ checksum "GoSpeak/Test/Tests.csproj" }}
           paths:
             - /root/.nuget/packages
       - run:
           name: "Run Application Tests"
-          command: dotnet.exe test GoSpeak/Test/Tests.csproj --filter Test=Unit -v n --results-directory:test_coverage --collect:"Code Coverage"
+          command: dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit -v n --results-directory:test_coverage --collect:"Code Coverage"
