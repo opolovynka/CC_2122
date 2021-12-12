@@ -97,4 +97,4 @@ jobs:
             - /root/.nuget/packages
       - run:
           name: "Run Application Tests"
-          command: dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit -v n --results-directory:test_coverage --collect:"Code Coverage"
+          command: dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit
