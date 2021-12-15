@@ -14,6 +14,8 @@ RUN chmod 755 /app
 USER tstuser
 # switch to the folder app
 WORKDIR /app
+# to install next dependencies we have to create manifest
+RUN dotnet new tool-manifest
 # restore test project dependencies and run tests
 RUN dotnet tool install Nake --version 3.0.0-beta-01
 
