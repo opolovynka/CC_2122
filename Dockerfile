@@ -12,4 +12,4 @@ RUN dotnet new tool-manifest --force
 # restore test project dependencies and run tests
 RUN dotnet tool install Nake --version 3.0.0-beta-01
 
-CMD ["dotnet", "nake", "test"]
+ENTRYPOINT ["dotnet", "nake", "test"]
