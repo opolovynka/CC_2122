@@ -1,4 +1,4 @@
-# GoSpeak v.0.4.2
+# GoSpeak v.0.4.3
 [![Build and Test](https://github.com/opolovynka/GoSpeak/actions/workflows/test.yml/badge.svg)](https://github.com/opolovynka/GoSpeak/actions/workflows/test.yml)
 [![Push Docker image to Docker Hub](https://github.com/opolovynka/GoSpeak/actions/workflows/docker-image.yml/badge.svg)](https://github.com/opolovynka/GoSpeak/actions/workflows/docker-image.yml)
 

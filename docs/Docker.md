@@ -13,29 +13,21 @@ To build and test our code we will use mcr.microsoft.com/dotnet/sdk:5.0 image wh
 Also to run our scripts for npm we have to install it as well. Based on [this article](https://hyr.mn/docker-dotnet5/) we will add FROM node:lts-buster-slim AS node_base layer to copy nodejs.
 
 ```Dockerfile
-# nodejs
-FROM node:lts-buster-slim AS node_base
 #new build layer
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-COPY --from=node_base . .
-
-# copy our solution to app folder
-COPY ./GoSpeak/ /app
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 
 # add new user to the container
 RUN useradd -ms /bin/bash tstuser
-#set user as owner of the app folder
-RUN chown -R tstuser /app
-# set permissions for app folder
-RUN chmod 755 /app
 
 USER tstuser
 # switch to the folder app
 WORKDIR /app
+# to install next dependencies we have to create manifest
+RUN dotnet new tool-manifest --force
 # restore test project dependencies and run tests
-RUN npm test
-#run tests
-CMD ["npm", "test"]
+RUN dotnet tool install Nake --version 3.0.0-beta-01
+
+CMD ["dotnet", "nake", "test"]
 ```
 
 * Publish image
