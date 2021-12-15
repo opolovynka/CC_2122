@@ -10,6 +10,10 @@ WORKDIR /app/test
 # to install next dependencies we have to create manifest
 RUN dotnet new tool-manifest --force
 # restore test project dependencies and run tests
-RUN dotnet tool install Nake --version 3.0.0-beta-01 --global
+RUN dotnet tool install Nake --version 3.0.0-beta-01
 
-ENTRYPOINT ["dotnet", "nake", "test"]
+#RUN export PATH="$PATH:/home/tstuser/.dotnet/tools"
+
+ENV PATH="/home/tstuser/.dotnet/tools:${PATH}"
+
+ENTRYPOINT [ "dotnet", "test"]
