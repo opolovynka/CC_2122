@@ -1,7 +1,7 @@
 # nodejs
 FROM node:lts-buster-slim AS node_base
 #new build layer
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 COPY --from=node_base . .
 
 # copy our solution to app folder
@@ -18,4 +18,6 @@ USER tstuser
 # switch to the folder app
 WORKDIR /app
 # restore test project dependencies and run tests
-CMD ['dotnet', 'test']
+RUN npm test
+
+CMD ["npm", "test"]
