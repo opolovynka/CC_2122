@@ -1,11 +1,10 @@
 lenguaje:
   - C#
 entidad:
-  - GoSpeak/QuestionService/Program.cs
+  - app/QuestionService/Program.cs
 controller:
-  - GoSpeak/QuestionService/Controllers/QuestionController.cs
+  - app/QuestionService/Controllers/QuestionController.cs
 fichero_tareas:
-  - GoSpeak/package.json
+  - app/Nake.csx
 test:
-  - GoSpeak/Test/QuestionControllerUnitTest.cs
-  - GoSpeak/Test/QuestionControllerIntegrationTest.cs
+  - app/test/QuestionControllerUnitTest.cs  
