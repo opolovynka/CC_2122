@@ -87,14 +87,14 @@ jobs:
           at: GoSpeak/QuestionService
       - restore_cache:
           keys: # see comments under build-netstandard-2
-            - dotnet-packages-v1-{{ checksum "GoSpeak/Test/Tests.csproj" }}
+            - dotnet-packages-v1-{{ checksum "GoSpeak/test/Tests.csproj" }}
       - run:
           name: "Install project dependencies"
-          command: dotnet restore GoSpeak/Test/Tests.csproj
+          command: dotnet restore GoSpeak/test/Tests.csproj
       - save_cache:
-          key: dotnet-packages-v1-{{ checksum "GoSpeak/Test/Tests.csproj" }}
+          key: dotnet-packages-v1-{{ checksum "GoSpeak/test/Tests.csproj" }}
           paths:
             - /root/.nuget/packages
       - run:
           name: "Run Application Tests"
-          command: dotnet test GoSpeak/Test/Tests.csproj --filter Test=Unit -f <<parameters.test-target-framework>>
+          command: dotnet test GoSpeak/test/Tests.csproj --filter Test=Unit -f <<parameters.test-target-framework>>
