@@ -1,8 +1,8 @@
 #new build layer
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 
-# # add new user to the container
-# RUN useradd -ms /bin/bash tstuser
+# add new user to the container
+RUN useradd -ms /bin/bash tstuser
 # #set user as owner of the app folder
 # RUN chown -R tstuser /app
 # # set permissions for app folder
