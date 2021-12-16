@@ -18,4 +18,4 @@ using static System.Console;        //      will make you scripts more terse
     /p:Configuration={config} /v:d";
 
 [Nake] async Task Test()  => await                                         
-    $@"dotnet test Test/Tests.csproj --filter Test=Unit";
+    $@"dotnet test test/Tests.csproj --filter Test=Unit";
