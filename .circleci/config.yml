@@ -51,19 +51,19 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - dotnet-packages-v1-{{ checksum "GoSpeak/QuestionService/QuestionService.csproj" }}
+            - dotnet-packages-v1-{{ checksum "app/QuestionService/QuestionService.csproj" }}
       - run:
           name: "Install project dependencies"
-          command: dotnet restore GoSpeak/QuestionService/QuestionService.csproj
+          command: dotnet restore app/QuestionService/QuestionService.csproj
       - save_cache:
-          key: dotnet-packages-v1-{{ checksum "GoSpeak/QuestionService/QuestionService.csproj" }}
+          key: dotnet-packages-v1-{{ checksum "app/QuestionService/QuestionService.csproj" }}
           paths:
             - /root/.nuget/packages
       - run:
          name: "Build Application according to some given configuration"
-         command: dotnet build  GoSpeak/QuestionService/QuestionService.csproj --configuration Release
+         command: dotnet build  app/QuestionService/QuestionService.csproj --configuration Release
       - persist_to_workspace:
-          root: GoSpeak/QuestionService
+          root: app/QuestionService
           paths:
             - bin
             - obj
@@ -84,17 +84,17 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: GoSpeak/QuestionService
+          at: app/QuestionService
       - restore_cache:
           keys: # see comments under build-netstandard-2
-            - dotnet-packages-v1-{{ checksum "GoSpeak/test/Tests.csproj" }}
+            - dotnet-packages-v1-{{ checksum "app/test/Tests.csproj" }}
       - run:
           name: "Install project dependencies"
-          command: dotnet restore GoSpeak/test/Tests.csproj
+          command: dotnet restore app/test/Tests.csproj
       - save_cache:
-          key: dotnet-packages-v1-{{ checksum "GoSpeak/test/Tests.csproj" }}
+          key: dotnet-packages-v1-{{ checksum "app/test/Tests.csproj" }}
           paths:
             - /root/.nuget/packages
       - run:
           name: "Run Application Tests"
-          command: dotnet test GoSpeak/test/Tests.csproj --filter Test=Unit -f <<parameters.test-target-framework>>
+          command: dotnet test app/test/Tests.csproj --filter Test=Unit -f <<parameters.test-target-framework>>
