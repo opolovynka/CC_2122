@@ -6,7 +6,7 @@ RUN useradd -ms /bin/bash tstuser
 
 USER tstuser
 # switch to the folder app
-WORKDIR /app/test
+WORKDIR /app/test/Test
 # to install next dependencies we have to create manifest
 RUN dotnet new tool-manifest --force
 # restore test project dependencies and run tests
