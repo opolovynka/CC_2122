@@ -36,4 +36,4 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           
       - name: Test container
-        run: docker run -t -v `pwd`:/app/test opolovynka/gospeak:latest
+        run: docker run -t -v ${pwd}:/app/test opolovynka/gospeak:latest
