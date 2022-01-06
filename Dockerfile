@@ -22,5 +22,5 @@ RUN dotnet tool install --tool-path ~/bin Nake --version 3.0.0-beta-01
 
 ENV PATH="$PATH:/home/tstuser/bin"
 
-CMD ["nake", "test"]
+ENTRYPOINT ["nake", "test"]
 #CMD ["/bin/sh"]
