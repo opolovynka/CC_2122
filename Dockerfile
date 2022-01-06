@@ -3,10 +3,12 @@ FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 
 # add new user to the container
 RUN useradd -ms /bin/bash tstuser
+
+RUN mkdir /app
 # #set user as owner of the app folderdocker
-# RUN chown -R tstuser /app
+RUN chown -R tstuser /app
 # # set permissions for app folder
-# RUN chmod 755 /app
+RUN chmod 755 /app
 
 USER tstuser
 # switch to the folder app
