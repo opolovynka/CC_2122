@@ -4,26 +4,26 @@ workflows:
   version: 2
   test:
     jobs:
-      - build-netstandard-3
+      - build-netstandard-2
       - test-netcore:
-          name: .NET Core 3.1
+          name: .NET Standard 2.0 + .NET Core 3.1
           docker-image: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
           build-target-framework: netstandard2.0
           test-target-framework: netcoreapp3.1
       - test-netcore:
-          name: .NET Standard 3.1 + .NET 5.0
+          name: .NET Standard 2.0 + .NET 5.0
           docker-image: mcr.microsoft.com/dotnet/sdk:5.0-focal
           build-target-framework: netstandard2.0
           test-target-framework: net5.0
           requires:
-            - build-netstandard-3
+            - build-netstandard-2
       - test-netcore:
-          name: .NET Standard 3.1 + .NET 6.0
+          name: .NET Standard 2.0 + .NET 6.0
           docker-image: mcr.microsoft.com/dotnet/sdk:6.0-focal
           build-target-framework: netstandard2.0
           test-target-framework: net6.0
           requires:
-            - build-netstandard-3
+            - build-netstandard-2
 
 orbs:
   win: circleci/windows@1.0.0
