@@ -12,7 +12,7 @@ RUN useradd -ms /bin/bash tstuser
 
 USER tstuser
 # switch to the folder app
-WORKDIR /app/test/
+WORKDIR /app/test/app
 # to install next dependencies we have to create manifest
 #RUN dotnet new tool-manifest --force
 
@@ -24,5 +24,5 @@ RUN dotnet tool install --tool-path ~/bin Nake --version 3.0.0-beta-01
 
 ENV PATH="$PATH:/home/tstuser/bin"
 
-ENTRYPOINT ["nake", "test"]
+ENTRYPOINT ["dotnet", "test"]
 #CMD ["/bin/sh"]
