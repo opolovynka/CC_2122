@@ -9,11 +9,7 @@ jobs:
     steps:
       - name: checkout project
         uses: actions/checkout@v2
-      - name: Setup .NET Core 2.1	
-        uses: actions/setup-dotnet@v1	
-        with:	
-          dotnet-version: 2.1.x
-      - name: run .net 2.1.x
+      - name: run .net 3.1.x
         run: dotnet build app/QuestionService/QuestionService.csproj
       - name: Setup .NET Core 3.1	
         uses: actions/setup-dotnet@v1	
